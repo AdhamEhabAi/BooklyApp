@@ -12,13 +12,15 @@ class BookListViewItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        GoRouter.of(context).pushReplacement('/bookDetailsView');
+        GoRouter.of(context).pushReplacement('/bookDetailsView',extra: bookModel);
       },
       child: SizedBox(
         height: 125,
         child: Row(
           children: [
-            CustomBookImage(imgUrl: bookModel.volumeInfo.imageLinks!.thumbnail),
+            CustomBookImage(
+              imgUrl: bookModel.volumeInfo.imageLinks?.thumbnail ?? '',
+            ),
             const SizedBox(
               width: 30,
             ),
@@ -49,13 +51,13 @@ class BookListViewItem extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                          'Free',
+                        'Free',
                         style: Styles.textStyle20
                             .copyWith(fontWeight: FontWeight.bold),
                       ),
                       BookRating(
-                          rating: bookModel.volumeInfo.averageRating ?? 0,
-                          counts: bookModel.volumeInfo.ratingsCount ?? 0,
+                        rating: bookModel.volumeInfo.averageRating ?? 0,
+                        counts: bookModel.volumeInfo.ratingsCount ?? 0,
                       ),
                     ],
                   ),

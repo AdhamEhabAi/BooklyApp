@@ -1,3 +1,4 @@
+import 'package:bookly_app/Features/home/data/models/book_model/book_model.dart';
 import 'package:bookly_app/Features/home/presentation/views/widgets/book_rating_widget.dart';
 import 'package:bookly_app/Features/home/presentation/views/widgets/books_action.dart';
 import 'package:bookly_app/Features/home/presentation/views/widgets/custom_book_details_appbar.dart';
@@ -6,8 +7,8 @@ import 'package:bookly_app/core/utils/styles.dart';
 import 'package:flutter/material.dart';
 
 class BooksDetailsSection extends StatelessWidget {
-  const BooksDetailsSection({super.key});
-
+  const BooksDetailsSection({super.key, required this.bookModel});
+  final BookModel bookModel;
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -17,35 +18,35 @@ class BooksDetailsSection extends StatelessWidget {
         const CustomBookDetailsAppBar(),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: width * .2),
-          child: const CustomBookImage(
-            imgUrl: 'https://images.squarespace-cdn.com/content/v1/60f1a490a90ed8713c41c36c/1629223610791-LCBJG5451DRKX4WOB4SP/37-design-powers-url-structure.jpeg',
+          child: CustomBookImage(
+            imgUrl: bookModel.volumeInfo.imageLinks?.thumbnail ?? '',
           ),
         ),
         const SizedBox(
           height: 43,
         ),
         Text(
-          'The Jungle Book',
+          bookModel.volumeInfo.title!,
           style: Styles.textStyle20
-              .copyWith(fontSize: 30, fontWeight: FontWeight.bold),
+              .copyWith(fontSize: 30,fontWeight: FontWeight.bold,),textAlign: TextAlign.center,
         ),
         const SizedBox(
           height: 6,
         ),
         Text(
-          'Rudyard Kipling',
+          bookModel.volumeInfo.authors![0],
           style: Styles.textStyle18
               .copyWith(color: Colors.grey, fontStyle: FontStyle.italic),
         ),
         const SizedBox(
           height: 18,
         ),
-        const Row(
+        Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             BookRating(
-              counts: 12,
-              rating: 13,
+              counts: bookModel.volumeInfo.averageRating ?? 1651,
+              rating: bookModel.volumeInfo.ratingsCount ?? 100,
             ),
           ],
         ),
